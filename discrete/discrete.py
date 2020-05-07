@@ -1,15 +1,21 @@
 import numpy as np
 
-def ikeda_map(t, u, xn, yn):
-    x = []
-    y = []
-    t = np.arange(0, t+1, 1)
-    for i in t:
-	    tn = 0.4 - 6./(1. + xn**2 + yn**2)
-	    xn1 = 1. + u * (xn * np.cos(tn) - yn * np.sin(tn))
-	    yn1 = u * (xn * np.sin(tn) + yn * np.cos(tn))
-	    x.append(xn1)
-	    y.append(yn1)
-	    xn = xn1
-	    yn = yn1
+def ikeda_map(n, u, x0, y0):
+    t = np.arange(n+1)
+    x = np.zeros(n+1)
+    y = np.zeros(n+1)
+    x[0], y[0] = x0, y0
+    for i in range(1, n+1):
+	    tn   = 0.4 - 6./(1. + x[i-1]**2 + y[i-1]**2)
+	    x[i] = 1. + u * (x[i-1] * np.cos(tn) - y[i-1] * np.sin(tn))
+	    y[i] =      u * (x[i-1] * np.sin(tn) + y[i-1] * np.cos(tn))
     return t, x, y
+
+
+def logistic_map(n, r, x0):
+    t = np.arange(n+1)
+    x = np.zeros(n+1)
+    x[0] = x0
+    for i in range(1, n+1):
+        x[i] = r * x[i-1] * (1. - x[i-1])
+    return t, x
