@@ -4,24 +4,30 @@ from scipy.integrate import odeint
 def chua(data, t, alpha, beta, a, b):
     x, y, z = data
     f = b * x + 0.5 * (a-b) * (abs(x+1)-abs(x-1))
-    x1 = alpha * (-x + y - f) 
-    y1 = x - y + z
-    z1 = -beta * y
-    return x1, y1, z1
+    dxdt = alpha * (-x + y - f) 
+    dydt = x - y + z
+    dzdt = -beta * y
+    return dxdt, dydt, dzdt
 
 def lorenz(data, t, sigma, rho, beta):
     x, y, z = data
-    x1 = sigma * (y - x)
-    y1 = x * (rho - z) - y
-    z1 = x * y - beta * z
-    return x1, y1, z1
+    dxdt = sigma * (y - x)
+    dydt = x * (rho - z) - y
+    dzdt = x * y - beta * z
+    return dxdt, dydt, dzdt
 
 def rossler(data, t, a, b, c):
     x, y, z = data
-    x1 = -y - z
-    y1 = x + a * y
-    z1 = b + z * (x - c)
-    return x1, y1, z1
+    dxdt = -y - z
+    dydt = x + a * y
+    dzdt = b + z * (x - c)
+    return dxdt, dydt, dzdt
+
+def van_der_pol(data, t, mu):
+    x, y = data
+    dxdt = y
+    dydt = mu * (1.0 - x**2) * y - x
+    return dxdt, dydt
 
 def chua_system(t, dt, alpha, beta, a, b, xi, yi, zi):
     t = np.arange(0, t+dt, dt)
@@ -41,3 +47,8 @@ def rossler_system(t, dt, a, b, c, xi, yi, zi):
     x, y, z = f.T    
     return t, x, y, z
 
+def van_der_pol_system(t, dt, mu, xi, yi):
+    t = np.arange(0, t+dt, dt)
+    f = odeint(van_der_pol, (xi, yi), t, args=(mu,))
+    x, y = f.T    
+    return t, x, y
