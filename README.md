@@ -19,3 +19,5 @@
   * Time series, attractor, bifurcation diagram
 * **Logistic map**
   * Time series, first return map, bifurcation diagram, Lyapunov exponent
+  * **Tent map**
+  * Time series, first return map, bifurcation diagram
