@@ -13,7 +13,9 @@
 
 ## Discrete dynamical systems
 
+* **Hénon map**
+  * Time series, attractor, bifurcation diagram
 * **Ikeda map** 
   * Time series, attractor, bifurcation diagram
 * **Logistic map**
-  * Time series, first return map, bifurcation diagram
+  * Time series, first return map, bifurcation diagram, Lyapunov exponent
