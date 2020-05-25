@@ -21,6 +21,35 @@ def cubic_map_lyapunov(n_transient, n, a, x0):
             result[i] = np.log(divergence)
     return np.mean(result)
 
+
+def cubic_map_v2(n, m, x0):
+    t = np.arange(n+1)
+    x = np.zeros(n+1)
+    x[0] = x0
+    for i in range(1, n+1):
+        x[i] = m * x[i-1] * (1. - x[i-1]**2)
+    return t, x
+
+
+def cubic_map_v2_lyapunov(n_transient, n, m, x0):
+    x = x0
+    for i in range(n_transient):
+        x = m * x * (1. - x**2)
+    result = np.zeros(n)
+    for i in range(n):
+        x = m * x * (1. - x**2)
+        divergence = np.abs(m - 3. * m * x**2)
+        if divergence != 0:
+            result[i] = np.log(divergence)
+    return np.mean(result)
+
+
+
+
+
+
+
+
 def henon_map(n, a, b, x0, y0):
     t = np.arange(n+1)
     x = np.zeros(n+1)
